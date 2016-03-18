@@ -63,7 +63,8 @@ public class MainActivity extends Activity  {
         wifi.startScan();
         spinner1 = (Spinner) findViewById(R.id.spinner);
 
-        final String location = spinner1.getSelectedItem().toString();
+
+
 
         button = (Button) findViewById(R.id.button);
 
@@ -72,7 +73,6 @@ public class MainActivity extends Activity  {
             @Override
             public void onClick(View v) {
 
-                System.out.println("hello");
                 //User scans for a list of all available WiFi signals
                 List<ScanResult> wifiScanList = wifi.getScanResults();
 
@@ -87,11 +87,11 @@ public class MainActivity extends Activity  {
                 try {
                     outputStream = openFileOutput(filename, Context.MODE_APPEND);
 
-                    System.out.println("test2");
+                    String location = spinner1.getSelectedItem().toString() + "\n";
                     //iterate through list of scanned access points
-                    String location2 = location + "\n";
 
-                    outputStream.write(location2.getBytes());
+
+                    outputStream.write(location.getBytes());
 
                     int count = 0;
 
@@ -116,7 +116,7 @@ public class MainActivity extends Activity  {
 
 
                             //
-                            wifis[count] = ssid + " - " + bssid + " : " + String.valueOf(level) + "\n";
+                            wifis[count] = bssid + "    " + String.valueOf(level) + "\n";
 
                             outputStream.write(wifis[count].getBytes());
                             count ++;
@@ -140,6 +140,8 @@ public class MainActivity extends Activity  {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+
+
                 File dir = getFilesDir();
                 File file = new File(dir, "myfile.txt");
                 boolean deleted = file.delete();

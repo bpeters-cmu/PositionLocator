@@ -1,17 +1,25 @@
 package cmu.positionlocator;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
 
+import android.os.Environment;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,10 +53,29 @@ public class MainActivity extends Activity  {
 
     List<Location> locations;
 
+    private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("This app needs location access");
+                builder.setMessage("Please grant location access so this app can detect Wi-Fi signals.");
+                builder.setPositiveButton(android.R.string.ok, null);
+                builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @TargetApi(Build.VERSION_CODES.M)
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        requestPermissions(new String[] {Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_REQUEST_COARSE_LOCATION);
+                    }
+                });
+                builder.show();
+            }
+        }
 
         //lv=(ListView)findViewById(R.id.listView);
         tv = (TextView)findViewById(R.id.textView2);
@@ -62,8 +89,6 @@ public class MainActivity extends Activity  {
         wifiReciever = new WifiScanReceiver();
         wifi.startScan();
         spinner1 = (Spinner) findViewById(R.id.spinner);
-
-
 
 
         button = (Button) findViewById(R.id.button);
@@ -80,15 +105,22 @@ public class MainActivity extends Activity  {
                 wifis = new String[wifiScanList.size()];
 
 
-                String filename = "myfile.txt";
+                String filename = "locations.txt";
 
+                //Toast.makeText(getApplicationContext(), filename, Toast.LENGTH_LONG).show();
                 FileOutputStream outputStream;
 
                 try {
+
                     outputStream = openFileOutput(filename, Context.MODE_APPEND);
 
-                    String location = spinner1.getSelectedItem().toString() + "\n";
+
+
+
+
+
                     //iterate through list of scanned access points
+                    final String location = spinner1.getSelectedItem().toString() + '\n';
 
 
                     outputStream.write(location.getBytes());
@@ -127,7 +159,7 @@ public class MainActivity extends Activity  {
 
                     try {
                         BufferedReader inputReader = new BufferedReader(new InputStreamReader(
-                                openFileInput("myfile.txt")));
+                                openFileInput("locations.txt")));
                         String inputString;
                         StringBuffer stringBuffer = new StringBuffer();
                         while ((inputString = inputReader.readLine()) != null) {
@@ -142,9 +174,9 @@ public class MainActivity extends Activity  {
                 }
 
 
+
                 File dir = getFilesDir();
-                File file = new File(dir, "myfile.txt");
-                boolean deleted = file.delete();
+
 
 
             }
@@ -289,6 +321,15 @@ public class MainActivity extends Activity  {
 
     }
 
+    public File getStorageDir() {
+        // Get the directory for the app's private pictures directory.
+        File file = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DOWNLOADS), "PositionLocatorFiles");
+        if (!file.mkdirs()) {
+            Log.e("Error", "Directory not created");
+        }
+        return file;
+    }
 
     //this method compares the users recorded signal level for a given AP and compares it with the list of pre-recorded locations
     //an array is returned containing the difference between the user's recorded signal level and the mapped level for each location

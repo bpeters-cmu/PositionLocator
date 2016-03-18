@@ -18,6 +18,8 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 
+import android.os.Environment;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -103,14 +105,15 @@ public class MainActivity extends Activity  {
                 wifis = new String[wifiScanList.size()];
 
 
-                String filename = "myfile.txt";
+                String filename = "locations.txt";
 
+                //Toast.makeText(getApplicationContext(), filename, Toast.LENGTH_LONG).show();
                 FileOutputStream outputStream;
 
                 try {
+
                     outputStream = openFileOutput(filename, Context.MODE_APPEND);
 
-                    System.out.println("test2");
                     //iterate through list of scanned access points
                     final String location = spinner1.getSelectedItem().toString() + '\n';
 
@@ -148,7 +151,7 @@ public class MainActivity extends Activity  {
                     }
                     outputStream.close();
 
-                    try {
+                    /*try {
                         BufferedReader inputReader = new BufferedReader(new InputStreamReader(
                                 openFileInput("myfile.txt")));
                         String inputString;
@@ -159,13 +162,13 @@ public class MainActivity extends Activity  {
                         System.out.println(stringBuffer.toString());
                     } catch (Exception e) {
                         e.printStackTrace();
-                    }
+                    }*/
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                File dir = getFilesDir();
+                /*File dir = getFilesDir();
                 File file = new File(dir, "myfile.txt");
-                boolean deleted = file.delete();
+                boolean deleted = file.delete();*/
 
 
             }
@@ -310,6 +313,15 @@ public class MainActivity extends Activity  {
 
     }
 
+    public File getStorageDir() {
+        // Get the directory for the app's private pictures directory.
+        File file = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DOWNLOADS), "PositionLocatorFiles");
+        if (!file.mkdirs()) {
+            Log.e("Error", "Directory not created");
+        }
+        return file;
+    }
 
     //this method compares the users recorded signal level for a given AP and compares it with the list of pre-recorded locations
     //an array is returned containing the difference between the user's recorded signal level and the mapped level for each location

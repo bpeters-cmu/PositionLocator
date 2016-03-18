@@ -23,6 +23,8 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -56,6 +58,75 @@ public class MainActivity extends Activity  {
         wifi=(WifiManager)getSystemService(Context.WIFI_SERVICE);
         wifiReciever = new WifiScanReceiver();
         wifi.startScan();
+        spinner1 = (Spinner) findViewById(R.id.spinner);
+
+        String location = spinner1.getSelectedItem().toString();
+
+        button = (Button) findViewById(R.id.button);
+
+        button.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                System.out.println("hello");
+                //User scans for a list of all available WiFi signals
+                List<ScanResult> wifiScanList = wifi.getScanResults();
+
+                //array of detected WiFi networks and signal strengths to display for mapping purposes
+                wifis = new String[wifiScanList.size()];
+
+
+                String filename = "myfile";
+
+                FileOutputStream outputStream;
+
+                try {
+                    outputStream = openFileOutput(filename, Context.MODE_APPEND);
+
+                    System.out.println("test2");
+                    //iterate through list of scanned access points
+                    for (int i = 0; i < wifiScanList.size(); i++) {
+
+                        System.out.println("test" + i);
+
+                        //wifis[i] = ((wifiScanList.get(i)).toString());
+
+
+                        //signal strength in dBm
+                        int level = wifiScanList.get(i).level;
+
+                        //Network ID
+                        String ssid = wifiScanList.get(i).SSID;
+
+                        //Access point mac address
+                        String bssid = wifiScanList.get(i).BSSID;
+
+
+                        int count = 0;
+
+
+                        //
+                        wifis[i] = ssid + " - " + bssid + " : " + String.valueOf(level);
+
+                        outputStream.write(wifis[i].getBytes());
+
+
+                    }
+                    outputStream.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+
+        });
+
+
+
+
     }
 
     protected void onPause() {
@@ -72,63 +143,10 @@ public class MainActivity extends Activity  {
 
     }
 
-    // get the selected dropdown list value
-    public void addListenerOnButton() {
-
-        spinner1 = (Spinner) findViewById(R.id.spinner);
-
-        String location = spinner1.getSelectedItem().toString();
-
-        button = (Button) findViewById(R.id.button);
-
-        button.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                //User scans for a list of all available WiFi signals
-                List<ScanResult> wifiScanList = wifi.getScanResults();
-
-                //array of detected WiFi networks and signal strengths to display for mapping purposes
-                wifis = new String[wifiScanList.size()];
 
 
 
 
-                //iterate through list of scanned access points
-                for(int i = 0; i < wifiScanList.size(); i++) {
-
-                    //wifis[i] = ((wifiScanList.get(i)).toString());
-
-
-                    //signal strength in dBm
-                    int level = wifiScanList.get(i).level;
-
-                    //Network ID
-                    String ssid = wifiScanList.get(i).SSID;
-
-                    //Access point mac address
-                    String bssid = wifiScanList.get(i).BSSID;
-
-
-                    int count = 0;
-
-
-
-                    //
-                    wifis[i] = ssid + " - " + bssid + " : " + String.valueOf(level);
-
-
-                }
-                
-
-
-
-            }
-
-
-        });
-
-    }
             @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

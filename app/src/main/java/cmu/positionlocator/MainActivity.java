@@ -24,7 +24,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -60,7 +63,7 @@ public class MainActivity extends Activity  {
         wifi.startScan();
         spinner1 = (Spinner) findViewById(R.id.spinner);
 
-        String location = spinner1.getSelectedItem().toString();
+        final String location = spinner1.getSelectedItem().toString();
 
         button = (Button) findViewById(R.id.button);
 
@@ -77,7 +80,7 @@ public class MainActivity extends Activity  {
                 wifis = new String[wifiScanList.size()];
 
 
-                String filename = "myfile";
+                String filename = "myfile.txt";
 
                 FileOutputStream outputStream;
 
@@ -86,9 +89,15 @@ public class MainActivity extends Activity  {
 
                     System.out.println("test2");
                     //iterate through list of scanned access points
+                    String location2 = location + "\n";
+
+                    outputStream.write(location2.getBytes());
+
+                    int count = 0;
+
                     for (int i = 0; i < wifiScanList.size(); i++) {
 
-                        System.out.println("test" + i);
+                        //System.out.println("test" + i);
 
                         //wifis[i] = ((wifiScanList.get(i)).toString());
 
@@ -103,20 +112,37 @@ public class MainActivity extends Activity  {
                         String bssid = wifiScanList.get(i).BSSID;
 
 
-                        int count = 0;
+                        if(ssid.equals("CMU-SECURE")) {
 
 
-                        //
-                        wifis[i] = ssid + " - " + bssid + " : " + String.valueOf(level);
+                            //
+                            wifis[count] = ssid + " - " + bssid + " : " + String.valueOf(level) + "\n";
 
-                        outputStream.write(wifis[i].getBytes());
-
+                            outputStream.write(wifis[count].getBytes());
+                            count ++;
+                        }
 
                     }
                     outputStream.close();
+
+                    try {
+                        BufferedReader inputReader = new BufferedReader(new InputStreamReader(
+                                openFileInput("myfile.txt")));
+                        String inputString;
+                        StringBuffer stringBuffer = new StringBuffer();
+                        while ((inputString = inputReader.readLine()) != null) {
+                            stringBuffer.append(inputString + "\n");
+                        }
+                        System.out.println(stringBuffer.toString());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                File dir = getFilesDir();
+                File file = new File(dir, "myfile.txt");
+                boolean deleted = file.delete();
 
 
             }

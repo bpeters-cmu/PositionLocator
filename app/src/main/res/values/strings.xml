@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">PositionLocator</string>
+    <string name="action_settings">Settings</string>
+
+    <string-array name="location_array">
+        <item>Location 1</item>
+        <item>Location 2</item>
+        <item>Location 3</item>
+        <item>Location 4</item>
+        <item>Location 5</item>
+        <item>Location 6</item>
+        <item>Location 7</item>
+        <item>Location 8</item>
+    </string-array>
+</resources>

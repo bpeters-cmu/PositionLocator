@@ -92,6 +92,8 @@ public class MainActivity extends Activity  {
 
         button = (Button) findViewById(R.id.button);
 
+        ((Button)findViewById(R.id.button2)).setOnClickListener(new Predictor((ListView)findViewById(R.id.listView)));
+
         button.setOnClickListener(new View.OnClickListener() {
 
             @Override

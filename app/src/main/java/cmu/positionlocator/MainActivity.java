@@ -198,12 +198,6 @@ public class MainActivity extends Activity  {
         registerReceiver(wifiReciever, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
         super.onResume();
     }
-    public void addListenerOnSpinnerItemSelection() {
-        spinner1 = (Spinner) findViewById(R.id.spinner);
-
-    }
-
-
 
 
 
@@ -321,15 +315,6 @@ public class MainActivity extends Activity  {
 
     }
 
-    public File getStorageDir() {
-        // Get the directory for the app's private pictures directory.
-        File file = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_DOWNLOADS), "PositionLocatorFiles");
-        if (!file.mkdirs()) {
-            Log.e("Error", "Directory not created");
-        }
-        return file;
-    }
 
     //this method compares the users recorded signal level for a given AP and compares it with the list of pre-recorded locations
     //an array is returned containing the difference between the user's recorded signal level and the mapped level for each location
@@ -361,41 +346,7 @@ public class MainActivity extends Activity  {
         return difference;
     }
 
-    //A location has an ID and a list of signals from various nearby access points
-    public class Location{
 
-        int ID;
-        List<Signal> signals = new ArrayList<Signal>();
-
-        public Location(int ID, List<Signal> signals){
-            this.ID = ID;
-            this.signals = signals;
-        }
-        public List getSignals(){
-            return this.signals;
-        }
-        public int getID(){
-            return this.ID;
-        }
-
-    }
-
-    //A signal has a BSSID(mac address) and a signal level for that AP
-    public class Signal{
-        String BSSID;
-        int level;
-
-        public Signal(String BSSID, int level){
-            this.BSSID = BSSID;
-            this.level = level;
-        }
-        public String getBSSID(){
-            return this.BSSID;
-        }
-        public int getLevel(){
-            return this.level;
-        }
-    }
 
     //We will record each mapped location within this method. We will record the mac address and signal level
     //of several access points here so we can compare with the user's signal strength for these access points

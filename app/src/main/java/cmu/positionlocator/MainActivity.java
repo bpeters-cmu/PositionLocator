@@ -365,63 +365,14 @@ public class MainActivity extends Activity  {
         lsOne.add(s1one);
         lsOne.add(s2one);
         lsOne.add(s3one);
-        Location lOne = new Location(1,lsOne);
+        Location lOne = new Location("one",lsOne);
 
-        //-------------- location 2 ------------------//
 
-        List<Signal> lsTwo = new ArrayList<Signal>();
-        Signal s1two = new Signal("00:1a:1e:8a:f7:41",-54);
-        Signal s2two = new Signal("00:1a:1e:8a:f9:21",-64);
-        Signal s3two = new Signal("00:1a:1e:8a:5d:61",-49);
-
-        lsTwo.add(s1two);
-        lsTwo.add(s2two);
-        lsTwo.add(s3two);
-        Location lTwo = new Location(2,lsTwo);
-
-        //-------------- location 3 ------------------//
-
-        List<Signal> lsThree = new ArrayList<Signal>();
-        Signal s1three = new Signal("00:1a:1e:8a:f7:41",-62);
-        Signal s2three = new Signal("00:1a:1e:8a:f9:21",-74);
-        Signal s3three = new Signal("00:1a:1e:8a:5d:61",-100);
-
-        lsThree.add(s1three);
-        lsThree.add(s2three);
-        lsThree.add(s3three);
-        Location lThree = new Location(3,lsThree);
-
-        //-------------- location 4 ------------------//
-
-        List<Signal> lsFour = new ArrayList<Signal>();
-        Signal s1four = new Signal("00:1a:1e:8a:f7:41",-73);
-        Signal s2four = new Signal("00:1a:1e:8a:f9:21",-64);
-        Signal s3four = new Signal("00:1a:1e:8a:5d:61",-54);
-
-        lsFour.add(s1four);
-        lsFour.add(s2four);
-        lsFour.add(s3four);
-        Location lFour = new Location(4,lsFour);
-
-        //-------------- location 5 ------------------//
-
-        List<Signal> lsFive = new ArrayList<Signal>();
-        Signal s1five = new Signal("00:1a:1e:8a:f7:41",-59);
-        Signal s2five = new Signal("00:1a:1e:8a:f9:21",-64);
-        Signal s3five = new Signal("00:1a:1e:8a:5d:61",-54);
-
-        lsFive.add(s1five);
-        lsFive.add(s2five);
-        lsFive.add(s3five);
-        Location lFive = new Location(5,lsFive);
 
 
         //add all recorded locations to the list so we can compare with the data the user provides
         locations.add(lOne);
-        locations.add(lTwo);
-        locations.add(lThree);
-        locations.add(lFour);
-        locations.add(lFive);
+
 
 
         return locations;

@@ -18,4 +18,5 @@ public class Signal{
     public int getLevel(){
         return this.level;
     }
+
 }

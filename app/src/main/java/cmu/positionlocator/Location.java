@@ -22,4 +22,18 @@ public class Location {
     public String getID(){
         return this.ID;
     }
+    public void setSignals(List<Signal>signals){
+        this.signals = signals;
+    }
+    @Override
+    public String toString(){
+        String result = null;
+
+        System.out.println(this.getID());
+        System.out.println(this.getSignals().size());
+
+
+
+        return result;
+    }
 }

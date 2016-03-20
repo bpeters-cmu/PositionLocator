@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
@@ -35,12 +36,14 @@ import android.widget.Toast;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import java.util.List;
 
 import java.math.*;
+import java.util.Scanner;
 
 public class MainActivity extends Activity  {
     ListView lv;
@@ -50,6 +53,7 @@ public class MainActivity extends Activity  {
     TextView tv;
     private Spinner spinner1;
     private Button button;
+    private Button button2;
 
     List<Location> locations;
 
@@ -93,6 +97,8 @@ public class MainActivity extends Activity  {
 
         button = (Button) findViewById(R.id.button);
 
+        button2 = (Button) findViewById(R.id.button2);
+
         button.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -115,12 +121,8 @@ public class MainActivity extends Activity  {
                     outputStream = openFileOutput(filename, Context.MODE_APPEND);
 
 
-
-
-
-
                     //iterate through list of scanned access points
-                    final String location = spinner1.getSelectedItem().toString() + '\n';
+                    final String location = "#" + '\t' + spinner1.getSelectedItem().toString() + '\n';
 
 
                     outputStream.write(location.getBytes());
@@ -144,15 +146,15 @@ public class MainActivity extends Activity  {
                         String bssid = wifiScanList.get(i).BSSID;
 
 
-                        if(ssid.equals("CMU-SECURE")) {
+                        //if(ssid.equals("CMU-SECURE")) {
 
 
                             //
-                            wifis[count] = bssid + "    " + String.valueOf(level) + "\n";
+                            wifis[count] = bssid + "\t" + String.valueOf(level) + "\n";
 
                             outputStream.write(wifis[count].getBytes());
                             count ++;
-                        }
+                        //}
 
                     }
                     outputStream.close();
@@ -172,15 +174,23 @@ public class MainActivity extends Activity  {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-
-
                 File dir = getFilesDir();
-
-
+                File file = new File(dir, "locations.txt");
+                boolean deleted = file.delete();
 
             }
 
+        });
+
+        button2.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                locations = initiate();
+                for(int i = 0; i<locations.size(); i++){
+                    locations.get(i).toString();
+                }
+            }
 
         });
 
@@ -352,30 +362,61 @@ public class MainActivity extends Activity  {
     //of several access points here so we can compare with the user's signal strength for these access points
     public List<Location> initiate(){
 
-        List<Location> locations = new ArrayList<Location>();
-
-        //-------------- location 1 ------------------//
-
-        List<Signal> lsOne = new ArrayList<Signal>();
-        Signal s1one = new Signal("00:1a:1e:8a:f7:41",-79);
-        Signal s2one = new Signal("00:1a:1e:8a:f9:21",-64);
-        Signal s3one = new Signal("00:1a:1e:8a:5d:61",-68);
-
-
-        lsOne.add(s1one);
-        lsOne.add(s2one);
-        lsOne.add(s3one);
-        Location lOne = new Location("one",lsOne);
+        List<Location> locationList = new ArrayList<Location>();
 
 
 
-
-        //add all recorded locations to the list so we can compare with the data the user provides
-        locations.add(lOne);
-
+        // The name of the file to open.
+        //File fileName = new File("locations.txt");
 
 
-        return locations;
+
+        try {
+            AssetManager am = getAssets();
+            InputStream is = am.open("locations.txt");
+            Scanner scanner = new Scanner(is);
+
+            scanner.useDelimiter("\t|\n");
+            int count = 0;
+
+            while (scanner.hasNext()) {
+
+
+                String current = scanner.next();
+
+                if(current.equals("#")){
+
+                    String loc = scanner.next();
+                    loc = loc.trim();
+                    System.out.println(loc);
+                    Location l = new Location(loc, new ArrayList<Signal>());
+                    locationList.add(l);
+                    count++;
+
+
+
+                }else{
+
+                    String mac = current;
+
+                    String level = scanner.next();
+                    level = level.trim();
+                    Signal s = new Signal(mac,Integer.parseInt(level));
+                    locationList.get(count-1).getSignals().add(s);
+                    System.out.println("------");
+
+                }
+
+
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+
+        return locationList;
     }
     public static int getMinIndex(int[] numbers){
         int minValue = numbers[0];

@@ -40,4 +40,12 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="94dp" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Load File"
+        android:id="@+id/button2"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

@@ -45,14 +45,22 @@
         android:id="@+id/listView"
         android:layout_below="@+id/button"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/button2" />
+        android:layout_above="@+id/btnPredict" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Predict"
+        android:id="@+id/btnPredict"
+        android:layout_below="@+id/listView"
+        android:layout_toEndOf="@+id/button" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Load File"
         android:id="@+id/button2"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_toStartOf="@+id/button" />
 
 </RelativeLayout>

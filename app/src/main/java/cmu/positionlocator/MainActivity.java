@@ -42,7 +42,7 @@ public class MainActivity extends Activity  {
     ListView lv;
     WifiManager wifi;
     String wifis[];
-    WifiScanReceiver wifiReciever;
+    //WifiScanReceiver wifiReciever;
     TextView tv;
     private Spinner spinner1;
     private Button button;
@@ -84,7 +84,7 @@ public class MainActivity extends Activity  {
 
 
         wifi=(WifiManager)getSystemService(Context.WIFI_SERVICE);
-        wifiReciever = new WifiScanReceiver();
+        //wifiReciever = new WifiScanReceiver();
         wifi.startScan();
         spinner1 = (Spinner) findViewById(R.id.spinner);
 
@@ -93,7 +93,7 @@ public class MainActivity extends Activity  {
         button2 = (Button) findViewById(R.id.button2);
         btnPredict = (Button) findViewById(R.id.btnPredict);
 
-        btnPredict.setOnClickListener(new Predictor((ListView)findViewById(R.id.listView)));
+        btnPredict.setOnClickListener(new Predictor(locations, (ListView)findViewById(R.id.listView)));
 
         button.setOnClickListener(new View.OnClickListener() {
 
@@ -195,15 +195,15 @@ public class MainActivity extends Activity  {
 
     }
 
-    protected void onPause() {
+    /*protected void onPause() {
         unregisterReceiver(wifiReciever);
         super.onPause();
-    }
+    }*/
 
-    protected void onResume() {
+    /*protected void onResume() {
         registerReceiver(wifiReciever, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
         super.onResume();
-    }
+    }*/
 
 
 
@@ -232,7 +232,7 @@ public class MainActivity extends Activity  {
 
 
 
-    private class WifiScanReceiver extends BroadcastReceiver{
+    /*private class WifiScanReceiver extends BroadcastReceiver{
 
 
         public void onReceive(Context c, Intent intent) {
@@ -319,13 +319,13 @@ public class MainActivity extends Activity  {
             tv.setText("Closest location: " + closestLocation);
         }
 
-    }
+    }*/
 
 
     //this method compares the users recorded signal level for a given AP and compares it with the list of pre-recorded locations
     //an array is returned containing the difference between the user's recorded signal level and the mapped level for each location
     //the index with the smallest difference should indicate which mapped location the user is closest to
-    public int[] findClosestMatch(String bssid, int level){
+    /*public int[] findClosestMatch(String bssid, int level){
 
         int[] difference = new int[5];
 
@@ -350,7 +350,7 @@ public class MainActivity extends Activity  {
 
 
         return difference;
-    }
+    }*/
 
 
 
@@ -385,7 +385,7 @@ public class MainActivity extends Activity  {
                     String loc = scanner.next();
                     loc = loc.trim();
                     System.out.println(loc);
-                    Location l = new Location(loc, new ArrayList<Signal>());
+                    Location l = new Location(loc);
                     locationList.add(l);
                     count++;
 
@@ -397,8 +397,9 @@ public class MainActivity extends Activity  {
 
                     String level = scanner.next();
                     level = level.trim();
-                    Signal s = new Signal(mac,Integer.parseInt(level));
-                    locationList.get(count-1).getSignals().add(s);
+                    locationList.get(count - 1).getSignals().put(mac, Integer.parseInt(level));
+                    //Signal s = new Signal(mac,Integer.parseInt(level));
+                    //locationList.get(count-1).getSignals().add(s);
                     System.out.println("------");
 
                 }

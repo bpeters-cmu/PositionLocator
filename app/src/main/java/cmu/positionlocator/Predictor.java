@@ -29,7 +29,7 @@ public class Predictor implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
-        Location currentLocation = null;
+        Location currentLocation = new Location(null);
 
         WifiManager wifi = (WifiManager) v.getContext().getSystemService(Context.WIFI_SERVICE);
         List<ScanResult> wifiScanList = wifi.getScanResults();

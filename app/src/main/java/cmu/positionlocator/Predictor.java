@@ -42,7 +42,7 @@ public class Predictor implements View.OnClickListener {
         for (Location location : locations) {
             distances.add(currentLocation.distanceFrom(location));
         }
-        Collections.sort(distances, Collections.reverseOrder());
+        Collections.sort(distances);
         int size = Math.min(5, distances.size());
         LocationDistance[] closestLocations = new LocationDistance[size];
         distances.subList(0, size).toArray(closestLocations);

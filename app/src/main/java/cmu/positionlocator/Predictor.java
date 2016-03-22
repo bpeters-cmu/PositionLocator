@@ -1,5 +1,8 @@
 package cmu.positionlocator;
 
+import android.content.Context;
+import android.net.wifi.ScanResult;
+import android.net.wifi.WifiManager;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -7,8 +10,6 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Queue;
 
 public class Predictor implements View.OnClickListener {
 
@@ -22,14 +23,20 @@ public class Predictor implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        Location currentLocation = null;
+        WifiManager wifi = (WifiManager) v.getContext().getSystemService(Context.WIFI_SERVICE);
+        List<ScanResult> wifiScanList = wifi.getScanResults();
+        Location currentLocation = new Location(null);
+        for (ScanResult result : wifiScanList) {
+            currentLocation.getSignals().put(result.BSSID, result.level);
+        }
         List<LocationDistance> distances = new ArrayList<>();
         for (Location location : locations) {
             distances.add(currentLocation.distanceFrom(location));
         }
         Collections.sort(distances, Collections.reverseOrder());
-        LocationDistance[] closestLocations = new LocationDistance[5];
-        distances.subList(0, 5).toArray(closestLocations);
+        int size = Math.min(5, distances.size());
+        LocationDistance[] closestLocations = new LocationDistance[size];
+        distances.subList(0, size).toArray(closestLocations);
         listView.setAdapter(new ArrayAdapter<LocationDistance>(v.getContext(), android.R.layout.simple_list_item_1, closestLocations));
     }
 }

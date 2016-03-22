@@ -1,8 +1,7 @@
 package cmu.positionlocator;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -29,7 +28,7 @@ public class Location {
 
     public LocationDistance distanceFrom(Location other) {
         double distance = 0;
-        Set<String> BSSIDs = signals.keySet();
+        Set<String> BSSIDs = new HashSet<>(signals.keySet());
         BSSIDs.addAll(other.signals.keySet());
         for (String BSSID : BSSIDs) {
             int level1 = signals.containsKey(BSSID) ? signals.get(BSSID) : Integer.MIN_VALUE;

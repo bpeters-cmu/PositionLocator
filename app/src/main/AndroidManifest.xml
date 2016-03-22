@@ -11,8 +11,8 @@
         android:icon="@mipmap/ic_launcher"
 
         android:theme="@style/AppTheme"
-        android:name=".ApplicationContextProvider"
-        android:label="@string/app_name">
+
+        android:label="PositionLocator">
 
         <activity
             android:name=".MainActivity"

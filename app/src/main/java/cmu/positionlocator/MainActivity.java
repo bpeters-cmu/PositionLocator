@@ -139,15 +139,12 @@ public class MainActivity extends Activity  {
                         String bssid = wifiScanList.get(i).BSSID;
 
 
-                        //if(ssid.equals("CMU-SECURE")) {
-
-
-                            //
+                        if(ssid.equals("CMU-SECURE")) {
                             wifis[count] = bssid + "\t" + String.valueOf(level) + "\n";
 
                             outputStream.write(wifis[count].getBytes());
                             count ++;
-                        //}
+                        }
 
                     }
                     outputStream.close();
@@ -167,9 +164,6 @@ public class MainActivity extends Activity  {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                File dir = getFilesDir();
-                File file = new File(dir, "locations.txt");
-                boolean deleted = file.delete();
 
             }
 

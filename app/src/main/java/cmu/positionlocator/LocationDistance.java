@@ -22,8 +22,8 @@ public class LocationDistance implements Comparable<LocationDistance> {
     }
 
     @Override
-    public int compareTo(LocationDistance another) {
-        return (int)(distance - another.distance);
+    public int compareTo(LocationDistance other) {
+        return Double.compare(distance, other.distance);
     }
 
     @Override

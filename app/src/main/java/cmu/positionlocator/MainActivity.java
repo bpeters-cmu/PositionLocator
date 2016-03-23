@@ -168,9 +168,6 @@ public class MainActivity extends Activity  {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                File dir = getFilesDir();
-                File file = new File(dir, "locations.txt");
-                boolean deleted = file.delete();
 
             }
 

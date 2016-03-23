@@ -41,9 +41,11 @@ public class Location {
             int level1 = signals.containsKey(BSSID) ? signals.get(BSSID) : Integer.MIN_VALUE;
             int level2 = other.signals.containsKey(BSSID) ? other.signals.get(BSSID) : Integer.MIN_VALUE;
             int diff = level1 - level2;
+            System.out.println(level1 + " " + level2);
             distance += diff * diff;
         }
         distance = Math.sqrt(distance);
+        System.out.println(other.getID() + " distance: "+ distance);
         return new LocationDistance(other.ID, distance);
     }
 

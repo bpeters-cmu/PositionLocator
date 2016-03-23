@@ -141,13 +141,13 @@ public class MainActivity extends Activity  {
 
                         if(ssid.equals("CMU-SECURE")) {
 
-
-                            //
                             wifis[count] = bssid + "\t" + String.valueOf(level) + "\n";
 
                             outputStream.write(wifis[count].getBytes());
                             count ++;
+
                             System.out.println(ssid.toString());
+
                         }
 
                     }

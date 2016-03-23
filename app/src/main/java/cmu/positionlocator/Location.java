@@ -38,8 +38,8 @@ public class Location {
 
 
         for (String BSSID : BSSIDs) {
-            int level1 = signals.containsKey(BSSID) ? Math.max(0, signals.get(BSSID) + 100) : 0;
-            int level2 = other.signals.containsKey(BSSID) ? Math.max(0, other.signals.get(BSSID) + 100) : 0;
+            int level1 = signals.containsKey(BSSID) ? Math.max(0, signals.get(BSSID) + 80) : 0;
+            int level2 = other.signals.containsKey(BSSID) ? Math.max(0, other.signals.get(BSSID) + 80) : 0;
             int diff = level1 - level2;
             System.out.println(level1 + " " + level2);
             distance += diff * diff;

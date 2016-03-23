@@ -35,22 +35,29 @@ public class Predictor implements View.OnClickListener {
         List<ScanResult> wifiScanList = wifi.getScanResults();
 
         for (ScanResult result : wifiScanList) {
-            if(result.SSID.equals("CMU-SECURE")) {
+
+            if (result.SSID.equals("CMU-SECURE")) {
                 currentLocation.getSignals().put(result.BSSID, result.level);
                 System.out.println("test");
-                System.out.println(result.SSID.toString() + " " + result.BSSID+ " " + result.level);
+                System.out.println(result.SSID.toString() + " " + result.BSSID + " " + result.level);
+
+                if (result.SSID.equals("CMU-SECURE")) {
+                    System.out.println(result.BSSID + " - " + result.level);
+                    currentLocation.getSignals().put(result.BSSID, result.level);
+
+                }
             }
+
+            List<LocationDistance> distances = new ArrayList<>();
+            for (Location location : locations) {
+                distances.add(currentLocation.distanceFrom(location));
+            }
+            Collections.sort(distances);
+            int size = Math.min(5, distances.size());
+            LocationDistance[] closestLocations = new LocationDistance[size];
+            distances.subList(0, size).toArray(closestLocations);
+            listView.setAdapter(new ArrayAdapter<LocationDistance>(v.getContext(), android.R.layout.simple_list_item_1, closestLocations));
         }
 
-        List<LocationDistance> distances = new ArrayList<>();
-        for (Location location : locations) {
-            distances.add(currentLocation.distanceFrom(location));
-        }
-        Collections.sort(distances);
-        int size = Math.min(5, distances.size());
-        LocationDistance[] closestLocations = new LocationDistance[size];
-        distances.subList(0, size).toArray(closestLocations);
-        listView.setAdapter(new ArrayAdapter<LocationDistance>(v.getContext(), android.R.layout.simple_list_item_1, closestLocations));
     }
-
 }

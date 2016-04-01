@@ -36,17 +36,14 @@ public class Predictor implements View.OnClickListener {
 
         for (ScanResult result : wifiScanList) {
 
-            if (result.SSID.equals("CMU-SECURE")) {
+
                 currentLocation.getSignals().put(result.BSSID, result.level);
                 System.out.println("test");
                 System.out.println(result.SSID.toString() + " " + result.BSSID + " " + result.level);
 
-                if (result.SSID.equals("CMU-SECURE")) {
-                    System.out.println(result.BSSID + " - " + result.level);
-                    currentLocation.getSignals().put(result.BSSID, result.level);
 
-                }
-            }
+
+        }
 
             List<LocationDistance> distances = new ArrayList<>();
             for (Location location : locations) {
@@ -60,4 +57,4 @@ public class Predictor implements View.OnClickListener {
         }
 
     }
-}
+

@@ -139,7 +139,7 @@ public class MainActivity extends Activity  {
                         String bssid = wifiScanList.get(i).BSSID;
 
 
-                        if(ssid.equals("CMU-SECURE")) {
+
 
                             wifis[count] = bssid + "\t" + String.valueOf(level) + "\n";
 
@@ -148,7 +148,7 @@ public class MainActivity extends Activity  {
 
                             System.out.println(ssid.toString());
 
-                        }
+
 
                     }
                     outputStream.close();

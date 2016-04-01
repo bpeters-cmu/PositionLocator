@@ -15,6 +15,7 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +28,7 @@ import android.widget.TextView;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -103,21 +105,25 @@ public class MainActivity extends Activity  {
                 //array of detected WiFi networks and signal strengths to display for mapping purposes
                 wifis = new String[wifiScanList.size()];
 
-
-                String filename = "locations.txt";
-
                 //Toast.makeText(getApplicationContext(), filename, Toast.LENGTH_LONG).show();
                 FileOutputStream outputStream;
 
+                /*File dir = new File("sdcard, "cmu.positionlocator");
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }*/
+
                 try {
 
-                    outputStream = openFileOutput(filename, Context.MODE_APPEND);
+                    //FileWriter writer = new FileWriter(new File("locations.txt"), true);
+                    outputStream = openFileOutput("locations.txt", Context.MODE_APPEND);
 
 
                     //iterate through list of scanned access points
                     final String location = "#" + '\t' + spinner1.getSelectedItem().toString() + '\n';
 
 
+                    //writer.append(location);
                     outputStream.write(location.getBytes());
 
                     int count = 0;
@@ -141,13 +147,16 @@ public class MainActivity extends Activity  {
 
                         wifis[count] = ssid + "\t" + bssid + "\t" + String.valueOf(level) + "\n";
 
+                        //writer.append(wifis[count]);
                         outputStream.write(wifis[count].getBytes());
                         count++;
 
                     }
                     outputStream.close();
+                    //writer.flush();
+                    //writer.close();
 
-                    try {
+                    /*try {
                         BufferedReader inputReader = new BufferedReader(new InputStreamReader(
                                 openFileInput("locations.txt")));
                         String inputString;
@@ -158,7 +167,7 @@ public class MainActivity extends Activity  {
                         System.out.println(stringBuffer.toString());
                     } catch (Exception e) {
                         e.printStackTrace();
-                    }
+                    }*/
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

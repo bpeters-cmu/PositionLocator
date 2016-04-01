@@ -139,12 +139,10 @@ public class MainActivity extends Activity  {
                         String bssid = wifiScanList.get(i).BSSID;
 
 
-                        if(ssid.equals("CMU-SECURE")) {
-                            wifis[count] = bssid + "\t" + String.valueOf(level) + "\n";
+                        wifis[count] = ssid + "\t" + bssid + "\t" + String.valueOf(level) + "\n";
 
-                            outputStream.write(wifis[count].getBytes());
-                            count ++;
-                        }
+                        outputStream.write(wifis[count].getBytes());
+                        count++;
 
                     }
                     outputStream.close();
@@ -384,8 +382,8 @@ public class MainActivity extends Activity  {
 
                 }else{
 
-                    String mac = current;
-
+                    String ssid = current;
+                    String mac = scanner.next();
                     String level = scanner.next();
                     level = level.trim();
                     locationList.get(count - 1).getSignals().put(mac, Integer.parseInt(level));

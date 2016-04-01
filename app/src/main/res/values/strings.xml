@@ -3,11 +3,21 @@
     <string name="action_settings">Settings</string>
 
     <string-array name="location_array">
-        <item>Heinz Lounge</item>
-        <item>Computing Services</item>
-        <item>Bathroom Ground Floor</item>
-        <item>Heinz Cafe</item>
-        <item>Interview Rooms</item>
-        <item>HbH 1000</item>
+        <item>A1</item>
+        <item>A2</item>
+        <item>A3</item>
+        <item>B1</item>
+        <item>B2</item>
+        <item>B3</item>
+        <item>C1</item>
+        <item>C2</item>
+        <item>D1</item>
+        <item>D2</item>
+        <item>CoreA</item>
+        <item>CoreB</item>
+        <item>CoreC</item>
+        <item>CoreD</item>
+        <item>Landside</item>
+        <item>Security</item>
     </string-array>
 </resources>

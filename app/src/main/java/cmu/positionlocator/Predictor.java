@@ -35,10 +35,8 @@ public class Predictor implements View.OnClickListener {
         List<ScanResult> wifiScanList = wifi.getScanResults();
 
         for (ScanResult result : wifiScanList) {
-            if (result.SSID.equals("CMU-SECURE")) {
-                System.out.println(result.BSSID + " - " + result.level);
-                currentLocation.getSignals().put(result.BSSID, result.level);
-            }
+            System.out.println(result.BSSID + " - " + result.level);
+            currentLocation.getSignals().put(result.BSSID, result.level);
         }
 
         List<LocationDistance> distances = new ArrayList<>();

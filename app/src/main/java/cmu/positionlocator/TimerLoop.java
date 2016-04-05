@@ -9,8 +9,11 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.TimerTask;
 
@@ -51,12 +54,6 @@ public class TimerLoop extends TimerTask {
 
 
                     currentLocation.getSignals().put(result.BSSID, result.level);
-//                    System.out.println("test");
-//                    System.out.println(result.SSID.toString() + " " + result.BSSID + " " + result.level);
-//
-//
-//                    System.out.println(result.BSSID + " - " + result.level);
-                    currentLocation.getSignals().put(result.BSSID, result.level);
 
                 }
 
@@ -70,13 +67,34 @@ public class TimerLoop extends TimerTask {
                 distances.subList(0, size).toArray(closestLocations);
                 listView.setAdapter(new ArrayAdapter<LocationDistance>(v.getContext(), android.R.layout.simple_list_item_1, closestLocations));
 
+
+                FileOutputStream outputStream;
+                try {
+                    outputStream = v.getContext().openFileOutput("results.txt", Context.MODE_APPEND);
+
+                    String timeStamp = new SimpleDateFormat("MM-dd HH:mm:ss").format(new Date())+"\n";
+
+                    outputStream.write(timeStamp.getBytes());
+
+                    for(LocationDistance loc:closestLocations){
+                        String location = loc.toString() + "\n";
+                        outputStream.write(location.getBytes());
+                    }
+
+
+                    outputStream.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
             }
+                });
 
-        });
 
+                }
+                }
 
-}
-}
 
 
 

@@ -1,6 +1,4 @@
 #	CoreA
-<<<<<<< HEAD
-=======
 FlyPittsburgh	00:1f:45:f7:b7:20	-86
 PINKBERRY	f8:e4:fb:f2:b6:f9	-76
 FlyPittsburgh	00:1f:45:f7:b7:18	-58
@@ -8231,7 +8229,6 @@ Free WiFi by Karma	bc:0f:2b:83:02:5c	-80
 TGI Friday Guest WIFI	08:5b:0e:90:85:08	-82
 HP8CC7B3	02:2d:0d:50:25:4a	-78
 #	CoreA
->>>>>>> 0df963ef5afec4be115660d355c94c8578a07e8d
 Verizon-291LVW-F20E	d0:95:c7:3a:f2:0e	-71
 PINKBERRY	f8:e4:fb:f2:b6:f9	-68
 FuelRod	ee:1d:7f:db:71:64	-66

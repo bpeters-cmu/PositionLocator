@@ -4,16 +4,21 @@ package cmu.positionlocator;
 import android.app.Activity;
 
 
+import android.app.Application;
 import android.content.Context;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Predictor implements View.OnClickListener {
 
@@ -29,32 +34,19 @@ public class Predictor implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
-        Location currentLocation = new Location(null);
-
-        WifiManager wifi = (WifiManager) v.getContext().getSystemService(Context.WIFI_SERVICE);
-        List<ScanResult> wifiScanList = wifi.getScanResults();
-
-        for (ScanResult result : wifiScanList) {
+        Timer timer = new Timer();
 
 
-                currentLocation.getSignals().put(result.BSSID, result.level);
-                System.out.println("test");
-                System.out.println(result.SSID.toString() + " " + result.BSSID + " " + result.level);
+        //execute predictor every minute
+        timer.scheduleAtFixedRate(new TimerLoop(v,locations,listView), new Date(), 60000);
 
 
 
-        }
-
-            List<LocationDistance> distances = new ArrayList<>();
-            for (Location location : locations) {
-                distances.add(currentLocation.distanceFrom(location));
-            }
-            Collections.sort(distances);
-            int size = Math.min(5, distances.size());
-            LocationDistance[] closestLocations = new LocationDistance[size];
-            distances.subList(0, size).toArray(closestLocations);
-            listView.setAdapter(new ArrayAdapter<LocationDistance>(v.getContext(), android.R.layout.simple_list_item_1, closestLocations));
-        }
 
     }
+}
+
+
+
+
 

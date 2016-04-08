@@ -48,6 +48,8 @@ public class MainActivity extends Activity  {
     private Button button2;
     private Button btnPredict;
 
+
+
     List<Location> locations;
 
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
@@ -78,6 +80,7 @@ public class MainActivity extends Activity  {
         tv = (TextView)findViewById(R.id.textView2);
 
 
+
         //initiate list of mapped locations
         locations = initiate();
 
@@ -89,10 +92,10 @@ public class MainActivity extends Activity  {
 
 
         button = (Button) findViewById(R.id.button);
-        button2 = (Button) findViewById(R.id.button2);
+        //button2 = (Button) findViewById(R.id.button2);
         btnPredict = (Button) findViewById(R.id.btnPredict);
 
-        btnPredict.setOnClickListener(new Predictor(locations, (ListView)findViewById(R.id.listView)));
+        btnPredict.setOnClickListener(new Predictor(locations, (ListView)findViewById(R.id.listView),(TextView)findViewById(R.id.textView)));
 
         button.setOnClickListener(new View.OnClickListener() {
 
@@ -184,17 +187,17 @@ public class MainActivity extends Activity  {
 
         });
 
-        button2.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                locations = initiate();
-                for(int i = 0; i<locations.size(); i++){
-                    locations.get(i).toString();
-                }
-            }
-
-        });
+//        button2.setOnClickListener(new View.OnClickListener(){
+//
+//            @Override
+//            public void onClick(View v) {
+//                locations = initiate();
+//                for(int i = 0; i<locations.size(); i++){
+//                    locations.get(i).toString();
+//                }
+//            }
+//
+//        });
 
 
 

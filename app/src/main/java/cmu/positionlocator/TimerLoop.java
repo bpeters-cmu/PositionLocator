@@ -8,6 +8,7 @@ import android.os.Looper;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
@@ -42,6 +43,8 @@ public class TimerLoop extends TimerTask {
                 //Do stuff
                 System.out.println("here's test");
 
+
+
                 Location currentLocation = new Location(null);
 
 
@@ -62,10 +65,11 @@ public class TimerLoop extends TimerTask {
                     distances.add(currentLocation.distanceFrom(location));
                 }
                 Collections.sort(distances);
-                int size = Math.min(5, distances.size());
+                int size = Math.min(7, distances.size());
                 LocationDistance[] closestLocations = new LocationDistance[size];
                 distances.subList(0, size).toArray(closestLocations);
                 listView.setAdapter(new ArrayAdapter<LocationDistance>(v.getContext(), android.R.layout.simple_list_item_1, closestLocations));
+
 
 
                 FileOutputStream outputStream;

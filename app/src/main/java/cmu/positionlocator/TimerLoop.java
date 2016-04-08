@@ -72,21 +72,28 @@ public class TimerLoop extends TimerTask {
 
 
 
-                FileOutputStream outputStream;
+                FileOutputStream outputStream, scanOutputStream;
                 try {
                     outputStream = v.getContext().openFileOutput("results.txt", Context.MODE_APPEND);
+                    scanOutputStream = v.getContext().openFileOutput("scans.txt", Context.MODE_APPEND);
 
                     String timeStamp = new SimpleDateFormat("MM-dd HH:mm:ss").format(new Date())+"\n";
 
                     outputStream.write(timeStamp.getBytes());
+                    scanOutputStream.write(timeStamp.getBytes());
 
                     for(LocationDistance loc:closestLocations){
                         String location = loc.toString() + "\n";
                         outputStream.write(location.getBytes());
                     }
 
+                    for (ScanResult result : wifiScanList) {
+                        String line = result.SSID + '\t' + result.BSSID + '\t' + result.level + '\n';
+                        scanOutputStream.write(line.getBytes());
+                    }
 
                     outputStream.close();
+                    scanOutputStream.close();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
